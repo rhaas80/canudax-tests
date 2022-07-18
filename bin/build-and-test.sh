@@ -23,6 +23,8 @@ cd Cactus
 NCPUS=$(nproc)
 time ./simfactory/bin/sim build -j$NCPUS --thornlist repos/cactusamrex/azure-pipelines/carpetx.th 2>&1 | tee build.log
 
+# somehow /usr/local/lib is not in the search path
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 time ./simfactory/bin/sim create-run TestJob01_temp_1 --cores 1 --num-threads 2 --testsuite --select-tests=CarpetX
 
 time ./simfactory/bin/sim create-run TestJob01_temp_2 --cores 2 --num-threads 1 --testsuite --select-tests=CarpetX

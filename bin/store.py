@@ -59,7 +59,7 @@ def store_commit_id(version):
     '''
     dst=f"./records/version_{version}/id.txt"
     # TODO: use pygit2 for this
-    id=".git/refs/heads/master"
+    id="repos/cactusamrex/.git/refs/heads/master"
     shutil.copy(id,dst)
 
 def get_version():

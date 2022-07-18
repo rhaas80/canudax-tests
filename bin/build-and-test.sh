@@ -30,6 +30,6 @@ time ./simfactory/bin/sim create-run TestJob01_temp_2 --cores 2 --num-threads 1 
 # parse results, generate plots
 
 cd $PAGESSPACE
-python3 $SCRIPTSPACE/bin/store.py
+python3 $SCRIPTSPACE/bin/store.py $WORKSPACE/Cactus/repos/cactusamrex
 
 python3 $SCRIPTSPACE/bin/logpage.py

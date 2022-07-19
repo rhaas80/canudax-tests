@@ -5,6 +5,9 @@ import requests
 import os
 from store import get_version
 from parser import test_comp
+
+# TODO: redo using pygit2
+
 runs_list=requests.get(f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/actions/runs").json()
 commit_list=requests.get(f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/commits")
 response=commit_list.json()

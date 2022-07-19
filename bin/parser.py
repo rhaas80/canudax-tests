@@ -37,9 +37,10 @@ def create_summary(file):
             elif lines[i]!="":
                 split_l=lines[i].split("->")
                 try:
-                    sum_data[" ".join(split_l[0].split())]=int(split_l[1].strip())
-                except:
-                    sum_data[" ".join(split_l[0].split())]=split_l[1]
+                    val = int(split_l[1])
+                except ValueError:
+                    val = split_l[1]
+                sum_data[" ".join(split_l[0].split())]=val
             i+=1
             
     return sum_data

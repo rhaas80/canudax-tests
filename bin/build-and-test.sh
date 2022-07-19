@@ -16,6 +16,9 @@ cp -ra $SCRIPTSPACE $PAGESSPACE
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents
 ./GetComponents --no-parallel --shallow https://bitbucket.org/eschnett/cactusamrex/raw/master/azure-pipelines/carpetx.th
+# unshallow carpetx repo
+( cd Cactus/repos/cactusamrex && git fetch --unshallow )
+
 
 cd Cactus
 ./simfactory/bin/sim setup-silent --optionlist repos/cactusamrex/azure-pipelines/debian.cfg

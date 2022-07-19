@@ -80,7 +80,10 @@ def test_comp(readfile_new,readfile_old):
         and the new and removed tests.
     '''
     passed_n,failed_n=get_tests(readfile_new)
-    passed_o,failed_o=get_tests(readfile_old)
+    try:
+        passed_o,failed_o=get_tests(readfile_old)
+    except FileNotFoundError:
+        passed_o,failed_o=(set(), set())
     newly_p=passed_n-passed_o
     newly_f=failed_n-failed_o
     new_tests=(passed_n.union(failed_n))-(passed_o.union(failed_o))

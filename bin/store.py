@@ -94,7 +94,12 @@ def get_commit_id(version):
     '''
         Returns the code commit id that this version corresponds to.
     '''
-    return open(f"./records/version_{version}/id.txt", "r").readline().strip()
+    try:
+        with open(f"./records/version_{version}/id.txt", "r") as fh:
+            id = fh.readline().strip()
+    except FileNotFoundError:
+        id = "0"
+    return id
 
 if __name__ == "__main__":
     dir1=os.path.expanduser("~/simulations/TestJob01_temp_1/output-0000/TEST/sim")

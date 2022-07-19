@@ -30,12 +30,14 @@ from parser import create_summary, get_tests, get_warning_thorns, get_warning_ty
     longest_tests,get_unrunnable,get_data,get_compile
 import glob
 
+REPO = sys.argv[1]
+
 records=os.listdir("./records")
 curr_ver=get_version()
 curr=f"./records/version_{curr_ver}/build__2_1_{curr_ver}.log"
 last=f"./records/version_{curr_ver-1}/build__2_1_{curr_ver-1}.log"
 
-repo = Repository('.git')
+repo = Repository(f'{REPO}.git')
 baseurl = repo.remotes["origin"].url.replace("git@", "https://").replace(".git","")
 
 def gen_commits():

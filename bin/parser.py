@@ -53,22 +53,23 @@ def get_tests(readfile):
     passed=set()
     failed=set()
     with open(readfile,"r") as fp:
-        lines=fp.read().splitlines()
-        ind=0
-        while not re.match("\s*Tests passed:",lines[ind]):
-            ind+=1
-        ind+=2
-        while not re.match("\s*Tests failed:",lines[ind]) and not re.match("=====*",lines[ind]):
-            passed.add(" ".join(lines[ind].split()))
-            ind+=1
-        ind+=2
-        while ind<len(lines) and not re.match("=====*",lines[ind]):
-            failed.add(" ".join(lines[ind].split()))
-            ind+=1
-        if "" in passed:
-            passed.remove("")
-        if "" in failed:
-            failed.remove("")
+        line = fp.readline()
+        while line:
+            if re.match("\s*Tests passed:",line):
+                line = fp.readline()
+                while line:
+                    line = fp.readline()
+                    if line.strip() == "":
+                        break
+                    padded.add(" ".join(line.split()))
+            elif re.match("\s*Tests failed:",line): 
+                line = fp.readline()
+                while line:
+                    line = fp.readline()
+                    if line.strip() == "":
+                        break
+                    failed.add(" ".join(line.split()))
+            line = fp.readline()
     return passed,failed
 
 def test_comp(readfile_new,readfile_old):
@@ -143,20 +144,37 @@ def get_unrunnable(readfile):
     miss_th={}
     miss_proc={}
     with open(readfile,"r") as fp:
-        lines=fp.read().splitlines()
-        ind=0
-        while not re.match("\s*Tests missed for lack of thorns:",lines[ind]):
-            ind+=1
-        ind+=2
-        while not re.match("\s*Tests missed for different number of processors required:",lines[ind]):
-            missing=lines[ind+2].split(":")[1].split()
-            miss_th[lines[ind].strip()]=missing
-            ind+=4
-        ind+=2
-        while not re.match("\s*Tests with different number of test files:",lines[ind]):
-            miss_proc[lines[ind].strip()]=lines[ind+2].strip()
-            ind+=4
+        line = fp.readline()
+        while line:
+            if re.match("\s*Tests missed for lack of thorns:",line):
+                line = fp.readline() # read empty line
+                while line:
+                    line = fp.readline()
+                    if not re.match("\s*\w+ in \w+", line):
+                        break
+                    thorn = line.split()[0]
+                    fp.readline()
+                    line = fp.readline()
+                    missing = line.split(":")[1].split()
+                    miss_th[thorn] = missing
+                line = fp.readline()
+                continue # re-parse line
+            elif re.match("\s*Tests missed for different number of processors required:",line): 
+                line = fp.readline() # read empty line
+                while line:
+                    line = fp.readline()
+                    if not re.match("\s*\w+ in \w+", line):
+                        break
+                    thorn = line.split()[0]
+                    fp.readline()
+                    line = fp.readline()
+                    missing = line.split(":")[1].split()
+                    miss_proc[thorn] = missing
+                    line = fp.readline()
+                continue # re-parse line
+            line = fp.readline()
     return miss_th,miss_proc
+
 def get_data(name):
     '''
         Retrieves singular field of data from the data csv as a list

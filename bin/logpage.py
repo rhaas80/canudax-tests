@@ -209,7 +209,7 @@ def plot_test_data(readfile):
     # start = times[len(axis) - 10]
     # end = times[len(axis) - 1]
     # print(start, end)
-    p=bplt.figure(x_range = (axis[len(axis) - 20], axis[len(axis) - 1]), y_range=(max(0, min(runnable)-30), max(runnable)+10), plot_width=1000, plot_height=600
+    p=bplt.figure(x_range = (axis[max(0, len(axis) - 20)], axis[-1]), y_range=(max(0, min(runnable)-30), max(runnable)+10), plot_width=1000, plot_height=600
                   ,tools="hover,tap,pan,xwheel_zoom,box_zoom,reset"
                   ,active_scroll="xwheel_zoom",
            y_axis_label="Number of Tests", x_axis_label="Date", x_axis_type="datetime",
@@ -431,6 +431,8 @@ def write_to_csv(readfile):
     #local_time+=f"({curr_ver})"
     data["Compile Time Warnings"]=get_compile(f"records/version_{curr_ver}/build_{curr_ver}.log")
     with open('test_nums.csv','a') as csvfile:
+        if csvfile.tell() == 0: # new file
+            csvfile.write("Date,Total available tests,Unrunnable tests,Runnable tests,Total number of thorns,Number of tested thorns,Number of tests passed,Number passed only to set tolerance,Number failed,Time Taken,Compile Time Warnings,Build Number\n")
         contents=f"{local_time}"
         for key in data.keys():
             contents+=f",{data[key]}"

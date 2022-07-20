@@ -444,7 +444,7 @@ def write_to_csv(readfile):
 if __name__ == "__main__":
     write_to_csv(curr)
     summary_to_html(curr,"docs/index.html")
-    copy_index(get_version()-1)
+    copy_index(get_version())
     test_comparison=test_comp(curr,last)
     if len(test_comparison["Failed Tests"])!=0 or len(test_comparison["Newly Passing Tests"])!=0 :
         dir = os.path.split(__file__)[0]

@@ -13,16 +13,6 @@ cd $WORKSPACE
 # - failures in this script
 # - failures in Pythhon code (as much as possible)
 
-python3 -c '
-import os
-dir1=os.path.expanduser("~/simulations/TestJob01_temp_1/output-0000/TEST/sim")
-dir2=os.path.expanduser("~/simulations/TestJob01_temp_2/output-0000/TEST/sim")
-print("dir1: ",dir1)
-print("dir2: ",dir2)
-os.system("ls -R ~")
-'
-exit 0
-
 # get a checkout of CarpetX
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents
@@ -44,12 +34,13 @@ time ./simfactory/bin/sim build -j$NCPUS --thornlist repos/cactusamrex/azure-pip
 # somehow /usr/local/lib is not in the search path
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 time ./simfactory/bin/sim create-run TestJob01_temp_1 --cores 1 --num-threads 2 --testsuite --select-tests=CarpetX
+ONEPROC_DIR="$(./simfactory/bin/sim get-output-dir TestJob01_temp_1)/TEST/sim"
 
 time ./simfactory/bin/sim create-run TestJob01_temp_2 --cores 2 --num-threads 1 --testsuite --select-tests=CarpetX
+TWOPROC_DIR="$(./simfactory/bin/sim get-output-dir TestJob01_temp_2)/TEST/sim"
 
 # parse results, generate plots
-
 cd $PAGESSPACE
-python3 $SCRIPTSPACE/bin/store.py $WORKSPACE/Cactus/repos/cactusamrex
+python3 $SCRIPTSPACE/bin/store.py $WORKSPACE/Cactus/repos/cactusamrex $ONEPROC_DIR $TWOPROC_DIR
 
 python3 $SCRIPTSPACE/bin/logpage.py $WORKSPACE/Cactus/repos/cactusamrex

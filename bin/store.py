@@ -102,9 +102,10 @@ def get_commit_id(version):
     return id
 
 if __name__ == "__main__":
-    dir1=os.path.expanduser("~/simulations/TestJob01_temp_1/output-0000/TEST/sim")
-    dir2=os.path.expanduser("~/simulations/TestJob01_temp_2/output-0000/TEST/sim")
+    # FIXME: this is quite bad, use some better argparse
     REPO = sys.argv[1]
+    dir1 = sys.argv[2]
+    dir2 = sys.argv[3]
     version=get_version()
     os.mkdir(f"./records/version_{version}/")
     copy_compile_log(version)

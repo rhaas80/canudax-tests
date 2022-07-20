@@ -19,6 +19,10 @@ chmod a+x GetComponents
 cd Cactus
 ./simfactory/bin/sim setup-silent --optionlist repos/cactusamrex/azure-pipelines/debian.cfg
 
+# for Formaline
+git config --global user.email "maintainers@einsteintoolkit.org"
+git config --global user.name "Github runner"
+
 NCPUS=$(nproc)
 time ./simfactory/bin/sim build -j$NCPUS --thornlist repos/cactusamrex/azure-pipelines/carpetx.th 2>&1 | tee build.log
 

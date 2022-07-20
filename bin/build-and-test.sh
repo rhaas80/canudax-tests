@@ -44,3 +44,13 @@ cd $PAGESSPACE
 python3 $SCRIPTSPACE/bin/store.py $WORKSPACE/Cactus/repos/cactusamrex $ONEPROC_DIR $TWOPROC_DIR
 
 python3 $SCRIPTSPACE/bin/logpage.py $WORKSPACE/Cactus/repos/cactusamrex
+
+# store HTML results
+git add docs
+git add records
+git add test_nums.csv
+if git commit -m "updated html file" ; then
+  git config --local user.email "maintainers@einsteintoolkit.org"
+  git config --local user.name "github runner"
+  git push
+fi

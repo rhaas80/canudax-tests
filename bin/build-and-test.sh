@@ -7,10 +7,6 @@ export PAGESSPACE=$PWD/gh-pages
 mkdir -p $WORKSPACE
 cd $WORKSPACE
 
-# get a checkout of the gh-pages branch
-cp -ra $SCRIPTSPACE $PAGESSPACE
-( cd $PAGESSPACE && git checkout -f gh-pages )
-
 # get a checkout of CarpetX
 
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents

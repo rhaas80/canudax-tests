@@ -85,10 +85,15 @@ def get_version():
         current_build=max(builds)
     except ValueError:
         current_build = 0
-    next_build = current+1
+    return current_build
+
+def store_version(next_build):
+    '''
+        This stores the version of the current build
+        in the list of build numbers file.
+    '''
     with open("./docs/version.txt",'a') as vers:
         vers.write(f"{next_build}\n")
-    return next_build
 
 def get_commit_id(version):
     '''
@@ -106,7 +111,8 @@ if __name__ == "__main__":
     REPO = sys.argv[1]
     dir1 = sys.argv[2]
     dir2 = sys.argv[3]
-    version=get_version()
+    version=get_version()+1
+    store_version(version)
     os.mkdir(f"./records/version_{version}/")
     copy_compile_log(version)
     copy_logs(dir1,version)

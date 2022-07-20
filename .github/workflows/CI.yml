@@ -37,3 +37,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: /bin/bash $GITHUB_WORKSPACE/scripts/bin/build-and-test.sh
+
+      # set exit code based on test status
+      - name: Exit code
+        if: ${{env.TESTS_FAILED == 'True'}}
+        run: exit 1

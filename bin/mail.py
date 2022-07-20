@@ -27,6 +27,7 @@ run_id=workflows.json()['workflow_runs'][0]["id"]
 # build_job=jobs[0]["steps"][3]
 build_no=get_version()
 curr=f"./records/version_{build_no}/build__2_1_{build_no}.log"
+last=f"./records/version_{build_no-1}/build__2_1_{build_no}.log"
 test_comparison=test_comp(curr,last)
 subject=""
 if len(test_comparison["Failed Tests"])!=0:

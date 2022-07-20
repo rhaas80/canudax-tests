@@ -60,7 +60,7 @@ msg.set_content(content)
  
 msg['Subject'] = subject
 msg['From'] = "jenkins@build-test.barrywardell.net"
-msg['To'] = "test@einsteintoolkit.org"
+msg['To'] = "carpetx-developers@einsteintoolkit.org"
  
 # Send the message via our own SMTP server.
 s = smtplib.SMTP('mail.einsteintoolkit.org')

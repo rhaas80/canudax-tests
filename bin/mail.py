@@ -51,7 +51,7 @@ html = f'''<!doctype html>
 msg = MIMEMultipart('alternative')
 msg['Subject'] = f"CarpetX test report: {status}"
 msg['From'] = "jenkins@build-test.barrywardell.net"
-msg['To'] = "test@einsteintoolkit.org"
+msg['To'] = "carpetx-developers@einsteintoolkit.org"
 
 # Record the MIME types of both parts - text/plain and text/html.
 part1 = MIMEText(text, 'plain')
@@ -65,5 +65,5 @@ msg.attach(part2)
  
 # Send the message via our own SMTP server.
 s = smtplib.SMTP('mail.einsteintoolkit.org')
-s.send_message(msg)
+#s.send_message(msg)
 s.quit()

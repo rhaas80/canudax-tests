@@ -63,5 +63,5 @@ msg.attach(part2)
  
 # Send the message via our own SMTP server.
 s = smtplib.SMTP('mail.einsteintoolkit.org')
-#s.send_message(msg)
+s.send_message(msg)
 s.quit()

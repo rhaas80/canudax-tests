@@ -25,12 +25,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-          branch: main
+          ref: main
           path: scripts
 
       - uses: actions/checkout@v3
         with:
-          branch: gh-pages
+          ref: gh-pages
           path: gh-pages
 
       # Runs a single command using the runners shell

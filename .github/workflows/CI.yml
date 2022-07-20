@@ -35,7 +35,7 @@ jobs:
           path: gh-pages
           
       - name: Log triggering commit
-        run: echo ${{ github.event.client_payload }}
+        run: echo  ${{ github.event.client_payload.trigger }}
 
       # Runs a single command using the runners shell
       - name: Run a one-line script

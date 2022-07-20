@@ -82,7 +82,7 @@ def gen_diffs(readfile):
     # The test_comp function provides tests that failed, were newly added or newly removed
     test_comparison=test_comp(readfile,last)
     if len(test_comparison["Failed Tests"])!=0:
-        print("TESTS_FAILED=True")
+        print("TESTS_FAILED=True", file=os.environ["GITHUB_ENV"])
 
     # Setup the header for the table
     output='''<table class="table table-bordered " >

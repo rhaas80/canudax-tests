@@ -13,6 +13,16 @@ cd $WORKSPACE
 # - failures in this script
 # - failures in Pythhon code (as much as possible)
 
+python3 -c '
+import os
+dir1=os.path.expanduser("~/simulations/TestJob01_temp_1/output-0000/TEST/sim")
+dir2=os.path.expanduser("~/simulations/TestJob01_temp_2/output-0000/TEST/sim")
+print("dir1: ",dir1)
+print("dir2: ",dir2)
+os.system("ls -R ~")
+'
+exit 0
+
 # get a checkout of CarpetX
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents

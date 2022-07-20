@@ -88,9 +88,19 @@ def test_comp(readfile_new,readfile_old):
     newly_f=failed_n-failed_o
     new_tests=(passed_n.union(failed_n))-(passed_o.union(failed_o))
     missing_tests=(passed_o.union(failed_o))-(passed_n.union(failed_n))
+    def test_key(label):
+        # Cactus test names allow all characters acceptable in file names,
+        # though ones with spaces would be rare
+        # Cactus thorn names must be C identifiers
+        m = re.match("([^ ]*) [(]from (\w*)[)]", label)
+        if m:
+            return (m.group(2), m.group(1))
+        else:
+            return ('', label)
     types=["Failed Tests","Newly Passing Tests","Newly Failing Tests","Newly Added Tests", "Removed Tests"]
     tests=[failed_n,newly_p,newly_f,new_tests,missing_tests]
-    test_dict={types[i]:tests[i] for i in range(len(types))}
+    sorted_tests=[sorted(test, key=test_key) for test in tests]
+    test_dict={types[i]:sorted_tests[i] for i in range(len(types))}
     return test_dict
 
 def get_times(readfile):

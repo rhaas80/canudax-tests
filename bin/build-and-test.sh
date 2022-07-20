@@ -7,8 +7,13 @@ export PAGESSPACE=$PWD/gh-pages
 mkdir -p $WORKSPACE
 cd $WORKSPACE
 
-# get a checkout of CarpetX
+# TODO: add code to detect and report:
+# - build failures
+# - checkout failures
+# - failures in this script
+# - failures in Pythhon code (as much as possible)
 
+# get a checkout of CarpetX
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents
 ./GetComponents --no-parallel --shallow https://bitbucket.org/eschnett/cactusamrex/raw/master/azure-pipelines/carpetx.th

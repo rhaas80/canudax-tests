@@ -18,7 +18,7 @@ wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents
 ./GetComponents --no-parallel --shallow https://bitbucket.org/eschnett/cactusamrex/raw/master/azure-pipelines/carpetx.th
 # unshallow carpetx repo
-( cd Cactus/repos/cactusamrex && git fetch --unshallow )
+( cd Cactus/repos/cactusamrex && git fetch --unshallow && echo "At git ref: $(git rev-parse HEAD)" )
 
 
 cd Cactus

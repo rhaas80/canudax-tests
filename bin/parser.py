@@ -61,7 +61,7 @@ def get_tests(readfile):
                     line = fp.readline()
                     if line.strip() == "":
                         break
-                    padded.add(" ".join(line.split()))
+                    passed.add(" ".join(line.split()))
             elif re.match("\s*Tests failed:",line): 
                 line = fp.readline()
                 while line:

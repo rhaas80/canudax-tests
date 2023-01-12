@@ -4,7 +4,8 @@ name: CI
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  # Allows external webhook trigger
+  # Allows external webhook trigger by bitbucket pipeline
+  # https://bitbucket.org/eschnett/cactusamrex/src/master/bitbucket-pipelines.yml
   repository_dispatch:
     types:
       - webhook

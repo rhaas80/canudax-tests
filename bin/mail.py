@@ -15,11 +15,11 @@ from email.mime.text import MIMEText
 logpage.REPO = sys.argv[1]
 
 # Create the body of the message (a plain-text and an HTML version).
-text = "HTML only email, please see https://einsteintoolkit.github.io/carpetx-tests for output"
+text = "HTML only email, please see https://rhaas80.github.io/canudaxx-tests for output"
 
 curr_ver = get_version()
 summary=f"./records/version_{curr_ver}/build__2_1_{curr_ver}.log"
-baseurl = "https://github.com/einsteintoolkit/carpetx-tests"
+baseurl = "https://github.com/rhaas80/canudaxx-tests"
 
 data = logpage.create_summary(summary)
 status = "All Tests Passed"
@@ -47,9 +47,9 @@ html = f'''<!doctype html>
 '''
 
 msg = MIMEMultipart('alternative')
-msg['Subject'] = f"CarpetX test report: {status}"
+msg['Subject'] = f"CanudaX test report: {status}"
 msg['From'] = "jenkins@build-test.barrywardell.net"
-msg['To'] = "carpetx-developers@einsteintoolkit.org"
+msg['To'] = "rhaas@illinois.edu,rhaas@ncsa.illinois.edu"
 
 # Record the MIME types of both parts - text/plain and text/html.
 part1 = MIMEText(text, 'plain')
@@ -61,7 +61,7 @@ part2 = MIMEText(html, 'html')
 msg.attach(part1)
 msg.attach(part2)
  
-# Send the message via our own SMTP server.
-s = smtplib.SMTP('mail.einsteintoolkit.org')
+# Send the message via UIUC's SMTP server.
+s = smtplib.SMTP('illinois.edu')
 s.send_message(msg)
 s.quit()

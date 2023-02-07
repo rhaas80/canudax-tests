@@ -44,7 +44,7 @@ pipelines:
         name: 'Build and Test'
         script:
           - >
-            curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token $TRIGGER_TOKEN" --request POST --data '{"event_type": "webhook", "client_payload": {"trigger":"'$BITBUCKET_COMMIT'"}}' https://api.github.com/repos/rhaas80/canudaxx-tests/dispatches
+            curl -H "Accept: application/vnd.github.everest-preview+json" -H "Authorization: token $TRIGGER_TOKEN" --request POST --data '{"event_type": "webhook", "client_payload": {"trigger":"'$BITBUCKET_COMMIT'"}}' https://api.github.com/repos/rhaas80/canudax-tests/dispatches
 ```
 
 `TRIGGER_TOKEN` is a bitbucket repository variable

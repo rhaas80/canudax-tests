@@ -26,9 +26,10 @@ chmod a+x GetComponents
 cd Cactus
 ./simfactory/bin/sim setup-silent --optionlist repos/cactusamrex/azure-pipelines/debian.cfg
 
-# for Formaline
-git config --global user.email "maintainers@einsteintoolkit.org"
-git config --global user.name "Github runner"
+# for Formaline, do not use git config --global since it overwrites the user's
+# own .gitrc file if the script is run outside a container
+export GIT_AUTHOR_EMAIL="maintainers@einsteintoolkit.org"
+export GIT_AUTHOR_NAME="Github runner"
 
 NCPUS=$(nproc)
 cat repos/cactusamrex/azure-pipelines/carpetx.th repos/canudax_lean/CanudaX.th >thornlists/canudax.th

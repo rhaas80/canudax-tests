@@ -30,6 +30,8 @@ cd Cactus
 # own .gitrc file if the script is run outside a container
 export GIT_AUTHOR_EMAIL="maintainers@einsteintoolkit.org"
 export GIT_AUTHOR_NAME="Github runner"
+export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 
 NCPUS=$(nproc)
 cat repos/cactusamrex/azure-pipelines/carpetx.th repos/canudax_lean/CanudaX.th >thornlists/canudax.th
@@ -57,7 +59,5 @@ git add docs
 git add records
 git add test_nums.csv
 if git commit -m "updated html file" ; then
-  git config --local user.email "maintainers@einsteintoolkit.org"
-  git config --local user.name "github runner"
   git push
 fi

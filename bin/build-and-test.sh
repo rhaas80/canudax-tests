@@ -17,8 +17,7 @@ cd $WORKSPACE
 wget https://raw.githubusercontent.com/gridaphobe/CRL/master/GetComponents
 chmod a+x GetComponents
 # CanudaX does not have a self-contained thornlist, so I inject it into CarpetX
-./GetComponents --no-parallel --shallow https://bitbucket.org/eschnett/cactusamrex/raw/master/azure-pipelines/carpetx.th
-./GetComponents --root Cactus --no-parallel --shallow https://bitbucket.org/canuda/canudax_lean/raw/master/CanudaX.th
+./GetComponents --no-parallel --shallow https://bitbucket.org/canuda/canudax_lean/raw/master/CanudaX.th
 # unshallow canudax_lean repo
 ( cd Cactus/repos/canudax_lean && git fetch --unshallow && echo "At git ref: $(git rev-parse HEAD)" )
 
@@ -34,8 +33,7 @@ export GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
 export GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
 
 NCPUS=$(nproc)
-cat repos/cactusamrex/azure-pipelines/carpetx.th repos/canudax_lean/CanudaX.th >thornlists/canudax.th
-time ./simfactory/bin/sim build -j$NCPUS --thornlist thornlists/canudax.th 2>&1 | tee build.log
+time ./simfactory/bin/sim build -j$NCPUS --thornlist thornlists/CanudaX.th 2>&1 | tee build.log
 
 # somehow /usr/local/lib is not in the search path
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH

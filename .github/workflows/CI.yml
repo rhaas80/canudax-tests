@@ -51,17 +51,17 @@ jobs:
         run: echo ${{github.event.client_payload.trigger}}
 
       - name: Download Cactus
-        run: /bin/bash $GITHUB_WORKSPACE/scripts/download.sh
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/bin/download.sh
 
       - name: Build Cactus
-        run: /bin/bash $GITHUB_WORKSPACE/scripts/build.sh
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/bin/build.sh
         # The oneAPI setup does not build yet
         continue-on-error: ${{matrix.accelerator == 'oneapi'}}
 
       - name: Test Cactus
         # We cannot run on accelerators. Debug builds run too slowly.
         if: ${{matrix.accelerator == 'cpu' && matrix.mode == 'optimize'}}
-        run: /bin/bash $GITHUB_WORKSPACE/scripts/test.sh
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/bin/test.sh
 
       # Set exit code based on test status
       - name: Set exit code

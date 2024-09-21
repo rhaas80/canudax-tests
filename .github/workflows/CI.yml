@@ -16,18 +16,17 @@ concurrency:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  # This workflow contains a single job
+  download-build-test:
     strategy:
       matrix:
-        accelerator: [cpu, cuda, rocm]
-        real-precision: [real64]
+        accelerator: [cpu, cuda, rocm, oneapi]
+        real-precision: [real32, real64]
         mode: [debug, optimize]
         exclude:
           - {accelerator: rocm, real-precision: real32}
-          - {accelerator: rocm, mode: debug} # uses too much memory?
+          - {accelerator: oneapi, real-precision: real32}
           - {real-precision: real32, mode: optimize}
-
     env:
       ACCELERATOR: ${{matrix.accelerator}}
       REAL_PRECISION: ${{matrix.real-precision}}
@@ -39,25 +38,33 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-        with:
-          ref: main
-          path: scripts
+      # Check out the repository under $GITHUB_WORKSPACE, so our job can access it
+      - uses: actions/checkout@v4
 
-      - uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-          path: gh-pages
-          
-      - name: Log triggering commit
-        run: echo  ${{ github.event.client_payload.trigger }}
+      # # Check out the documentation and test results
+      # - uses: actions/checkout@v3
+      #   with:
+      #     ref: gh-pages
+      #     path: gh-pages
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: /bin/bash $GITHUB_WORKSPACE/scripts/bin/build-and-test.sh
+      - name: Log the triggering commit
+        run: echo ${{github.event.client_payload.trigger}}
 
-      # set exit code based on test status
-      - name: Exit code
-        if: ${{env.TESTS_FAILED == 'True'}}
+      - name: Download Cactus
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/download.sh
+
+      - name: Build Cactus
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/build.sh
+        # The oneAPI setup does not build yet
+        continue-on-error: ${{matrix.accelerator == 'oneapi'}}
+
+      - name: Test Cactus
+        # We cannot run on accelerators. Debug builds run too slowly.
+        if: ${{matrix.accelerator == 'cpu' && matrix.mode == 'optimize'}}
+        run: /bin/bash $GITHUB_WORKSPACE/scripts/test.sh
+
+      # Set exit code based on test status
+      - name: Set exit code
+        # Only look at the test results for `carpetx-cpu-real64` runs
+        if: ${{matrix.accelerator == 'cpu' && matrix.real-precision == 'real64' && matrix.mode == 'optimize' && env.TESTS_FAILED == 'True'}}
         run: exit 1

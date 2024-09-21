@@ -261,4 +261,3 @@ def get_warning_thorns(name):
                     trunc=trunc[:trunc.find("/")]
                     warning_types[trunc]+=1
     return warning_types
-

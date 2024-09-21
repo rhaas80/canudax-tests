@@ -1,7 +1,10 @@
 '''
 This file stores logs for future use in the records folder
 '''
-import shutil,os,glob
+import glob
+import os
+import shutil
+import subprocess
 import sys
 import configparser
 
@@ -57,10 +60,10 @@ def copy_compile_log(version):
     '''
         This copies the compilation logs for future use
     '''
-    global REPO
+    GITHUB_WORKSPACE=os.environ["GITHUB_WORKSPACE"]
     dst=f"./records/version_{version}/build_{version}.log"
-    # TODO: fix this to not be relative to repo anymore
-    build=f"{REPO}/../../build.log"
+    # This must match the build command in `build.sh`
+    build=f"{GITHUB_WORKSPACE}/../workspace/Cactus/build.log"
     shutil.copy(build,dst)
 
 def store_commit_id(version):
@@ -68,10 +71,11 @@ def store_commit_id(version):
         This stores the current git HEAD hash for future use
     '''
     global REPO
+    # Keep trailing newline with the commit id
+    id=subprocess.check_output(["git", "--git-dir", f"{REPO}/.git", "rev-parse", "HEAD"])
     dst=f"./records/version_{version}/id.txt"
-    # TODO: use pygit2 for this
-    id=f"{REPO}/.git/refs/heads/master"
-    shutil.copy(id,dst)
+    with open(dst,'wb') as f:
+        f.write(id)
 
 def get_version():
     '''

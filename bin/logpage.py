@@ -451,5 +451,3 @@ if __name__ == "__main__":
     if len(test_comparison["Failed Tests"])!=0 or len(test_comparison["Newly Passing Tests"])!=0 :
         dir = os.path.split(__file__)[0]
         os.system(f"python3 {dir}/mail.py {REPO}")
-
-

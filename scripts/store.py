@@ -114,13 +114,13 @@ if __name__ == "__main__":
     # FIXME: this is quite bad, use some better argparse
     REPO = sys.argv[1]
     dir1 = sys.argv[2]
-    dir2 = sys.argv[3]
+    # dir2 = sys.argv[3]
     version=get_version()+1
     store_version(version)
     os.mkdir(f"./records/version_{version}/")
     copy_compile_log(version)
     copy_logs(dir1,version)
-    copy_logs(dir2,version)
+    # copy_logs(dir2,version)
     copy_tests(dir1,version,1)
-    copy_tests(dir2,version,2)
+    # copy_tests(dir2,version,2)
     store_commit_id(version)

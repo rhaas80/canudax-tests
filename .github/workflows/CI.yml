@@ -40,10 +40,10 @@ jobs:
       - uses: actions/checkout@v4
 
       # # Check out the documentation and test results
-      # - uses: actions/checkout@v3
-      #   with:
-      #     ref: gh-pages
-      #     path: gh-pages
+      - uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages
 
       - name: Log the triggering commit
         run: echo ${{github.event.client_payload.trigger}}

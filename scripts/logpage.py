@@ -2,7 +2,7 @@ from requests.api import get
 import sys
 import os,csv,time,requests,math
 from datetime import datetime
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 # Different Bokeh modules
 from bokeh.models.annotations import Legend

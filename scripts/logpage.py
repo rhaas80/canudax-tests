@@ -2,22 +2,22 @@ from requests.api import get
 import sys
 import os,csv,time,requests,math
 from datetime import datetime
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
-# # Different Bokeh modules
-# from bokeh.models.annotations import Legend
-# import bokeh.plotting as bplt
-# import bokeh.models.tools as btools
-# from bokeh.models import Panel, Tabs, DataRange1d
-# import bokeh.models.callbacks as bcall
-# from bokeh.resources import CDN
-# from bokeh.embed import components
-# from bokeh.layouts import row
-# from store import get_version,copy_index,get_commit_id
-# from bokeh.palettes import viridis
-# from bokeh.transform import factor_cmap
-# from bokeh.resources import CDN
-# from bokeh.embed import file_html
+# Different Bokeh modules
+from bokeh.models.annotations import Legend
+import bokeh.plotting as bplt
+import bokeh.models.tools as btools
+from bokeh.models import Panel, Tabs, DataRange1d
+import bokeh.models.callbacks as bcall
+from bokeh.resources import CDN
+from bokeh.embed import components
+from bokeh.layouts import row
+from store import get_version,copy_index,get_commit_id
+from bokeh.palettes import viridis
+from bokeh.transform import factor_cmap
+from bokeh.resources import CDN
+from bokeh.embed import file_html
 
 # to generate a commit log
 from pygit2 import Repository, Oid
@@ -313,7 +313,7 @@ def summary_to_html(readfile,writefile):
     data=create_summary(readfile)
     
     contents=""
-    # script,div=plot_test_data(readfile)
+    script,div=plot_test_data(readfile)
 
 
     # Check Status Using the data from the summary

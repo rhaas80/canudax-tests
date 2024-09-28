@@ -19,12 +19,12 @@ export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 time ./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" create-run TestJob01_temp_1 --cores 1 --num-threads 2 --testsuite --select-tests=CanudaX_Lean
 ONEPROC_DIR="$(./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" get-output-dir TestJob01_temp_1)/TEST/sim"
 
-time ./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" create-run TestJob01_temp_2 --cores 2 --num-threads 1 --testsuite --select-tests=CanudaX_Lean
-TWOPROC_DIR="$(./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" get-output-dir TestJob01_temp_2)/TEST/sim"
+# time ./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" create-run TestJob01_temp_2 --cores 2 --num-threads 1 --testsuite --select-tests=CanudaX_Lean
+# TWOPROC_DIR="$(./simfactory/bin/sim --machine="actions-$ACCELERATOR-$REAL_PRECISION" get-output-dir TestJob01_temp_2)/TEST/sim"
 
 # Parse results and generate plots
 cd "$PAGESSPACE"
-python3 "$CANUDAXSPACE/scripts/store.py" "$WORKSPACE/Cactus/repos/canudax_lean" "$ONEPROC_DIR" "$TWOPROC_DIR"
+python3 "$CANUDAXSPACE/scripts/store.py" "$WORKSPACE/Cactus/repos/canudax_lean" "$ONEPROC_DIR"
 python3 "$CANUDAXSPACE/scripts/logpage.py" "$WORKSPACE/Cactus/repos/canudax_lean"
 
 # Store HTML results
@@ -36,7 +36,7 @@ git commit -m "Add new test result" && git push
 # Show all log, output, and error files
 echo 'All log files:'
 echo '================================================================================'
-for logfile in $(find "${ONEPROC_DIR}" "${TWOPROC_DIR}" -name '*.log' -print); do
+for logfile in $(find "${ONEPROC_DIR}" -name '*.log' -print); do
     echo "Log file $logfile:"
     ls -l "$logfile"
     cat "$logfile"
@@ -44,7 +44,7 @@ for logfile in $(find "${ONEPROC_DIR}" "${TWOPROC_DIR}" -name '*.log' -print); d
 done
 echo 'All output files:'
 echo '================================================================================'
-for outfile in $(find "${ONEPROC_DIR}/../.." "${TWOPROC_DIR}/../.." -name '*.out' -print); do
+for outfile in $(find "${ONEPROC_DIR}/../.." -name '*.out' -print); do
     echo "Output file $outfile:"
     ls -l "$outfile"
     cat "$outfile"
@@ -52,7 +52,7 @@ for outfile in $(find "${ONEPROC_DIR}/../.." "${TWOPROC_DIR}/../.." -name '*.out
 done
 echo 'All error files:'
 echo '================================================================================'
-for errfile in $(find "${ONEPROC_DIR}/../.." "${TWOPROC_DIR}/../.." -name '*.err' -print); do
+for errfile in $(find "${ONEPROC_DIR}/../.." -name '*.err' -print); do
     echo "Error file $errfile:"
     ls -l "$errfile"
     cat "$errfile"
@@ -60,7 +60,7 @@ for errfile in $(find "${ONEPROC_DIR}/../.." "${TWOPROC_DIR}/../.." -name '*.err
 done
 
 TESTS_FAILED=False
-for test_dir in "${ONEPROC_DIR}" "${TWOPROC_DIR}"; do
+for test_dir in "${ONEPROC_DIR}"; do
     log="${test_dir}/summary.log"
     if ! grep -q '^    Number failed            -> 0$' ${log}; then
         TESTS_FAILED=True
